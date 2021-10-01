@@ -1,0 +1,119 @@
+@import "./colors";
+@import "./mixins";
+
+.container {
+    padding-top: 20px;
+    width: 80vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: beige;
+    overflow: hidden;
+
+    .title {
+        position: relative;
+        text-align: center;
+        min-height: 12vh;
+
+        .title-message {
+            margin: 0;
+        }
+
+        .title-message:first-child {
+            font-size: larger;
+            font-weight: bold;
+        }
+
+        .button {
+            margin: 5px 0;
+            border-radius: 2px;
+            box-shadow: -1px -1px 3px $dark-gray;
+            border: 1px $white;
+            padding: 4px;
+            width: 200px;
+            font-size: larger;
+            font-weight: bolder;
+        }
+
+        .button:hover {
+            box-shadow: -4px -4px 3px $dark-gray;
+        }
+
+        .turn-on {
+            background-color: $greenish;
+        }
+
+        .turn-off {
+            background-color: $redish;
+        }
+    }
+
+    .traffic-light {
+        position: relative;
+        height: 350px;
+        width: 200px;
+        background-color: $gray;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 50px 0;
+        align-items: center;
+        border-radius: 10px;
+        box-shadow: -1px -1px 3px $darker-gray;
+
+        .circle {
+            display: flex;
+            width: 100px;
+            height: 100px;
+            position: relative;
+            border-radius: 50%;
+            background-color: $almost-black;
+
+            &::after {
+                content: "";
+                position: absolute;
+                height: inherit;
+                width: inherit;
+                border-radius: inherit;
+            }
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            background-color: $gray;
+            width: 50px;
+            height: 500px;
+            bottom: -500px;
+            box-shadow: -1px 1px 3px $dark-gray;
+        }
+
+        .red {
+            background-color: $red;
+            box-shadow: 0 0 55px 2px $red;
+        }
+
+        .yellow {
+            background-color: $yellow;
+            box-shadow: 0 0 55px 2px $yellow;
+        }
+
+        .green {
+            background-color: $green;
+            box-shadow: 0 0 55px 2px $green;
+        }
+
+        .blinking-yellow {
+            &::after {
+                @include blinkig-color($yellow);
+            }
+        }
+
+        .blinking-green {
+            &::after {
+                @include blinkig-color($green);
+            }
+        }
+    }
+}
