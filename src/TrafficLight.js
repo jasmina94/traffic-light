@@ -5,9 +5,14 @@ import useMyMachine from './machine/UseMyMachine';
 
 const TrafficLight = () => {
   const title = "State machine - Traffic light example";
-  const { light } = useMyMachine(() => console.log('func'));
+  const light = STATES.BLINKING_GREEN;
+
+  const { machine } = useMyMachine();
+  const [currentMachineState, setCurrentMachineState] = useState(machine.value);
+
   const [message, setMessage] = useState("Here will be displayed message from machine");
 
+  
   const yellowLightClass = () => {
     if (light === STATES.YELLOW || light === STATES.RED_AND_YELLOW) {
       return "circle yellow";
@@ -42,8 +47,16 @@ const TrafficLight = () => {
     style: light === STATES.BLINKING_YELLOW ? "button turn-on" : "button -turn-off"
   }
 
-  return (
+  const toggle = () => {
+    const val = machine.transition(machine.value, 'switch');
+    setCurrentMachineState(val);
+  }
+
+  return ( 
     <div className="container">
+      <p>{currentMachineState}</p>
+      <button onClick={() => toggle()}>Test toggle machine</button>
+
       <div className="title">
         <p className="title-message">{title}</p>
         <p className="title-message">Crrent state - {light}</p>
@@ -55,6 +68,7 @@ const TrafficLight = () => {
         <div className={yellowLightClass()}></div>
         <div className={greenLightClass()}></div>
       </div>
+      
     </div>
   );
 }
