@@ -1,8 +1,8 @@
-import './styles/TrafficLight.scss';
+import '../styles/traffic-light.scss';
 import { useEffect, useRef } from 'react';
-import { ACTIONS, STATES } from './machine/constants';
-import useTrafficLightMachine from './machine/use-state-machine';
-import trafficLightDefintion from './machine/machine-def';
+import { ACTIONS, STATES } from '../machine/constants';
+import useTrafficLightMachine from '../machine/use-state-machine';
+import trafficLightDefintion from '../machine/state-machine-definition';
 
 const TrafficLight = () => {
   const title = "State machine - Traffic light example";

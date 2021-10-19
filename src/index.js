@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.scss';
 import reportWebVitals from './reportWebVitals';
-import TrafficLight from './TrafficLight';
+import TrafficLight from './components/TrafficLight';
 
 ReactDOM.render(
   <React.StrictMode>
