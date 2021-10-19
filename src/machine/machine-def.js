@@ -2,12 +2,12 @@ const { STATES, ACTIONS } = require("./constants");
 
 const trafficLightDefintion = {
     initalState: STATES.BLINKING_YELLOW,
-    transitions: {
+    states: {
         RED: {
-            nextState: STATES.YELLOW,
+            nextState: STATES.RED_AND_YELLOW,
             turnYellow: function () {
-                console.log('\tEnough of waiting. Turning yellow...');
-                return { nextAction: ACTIONS.TURN_GREEN, timeout: 700 };
+                console.log('\tEnough of waiting. Turning yellow and leaving red...');
+                return { nextAction: ACTIONS.TURN_GREEN, timeout: 2000 };
             }
         },
         RED_AND_YELLOW: {
@@ -35,14 +35,14 @@ const trafficLightDefintion = {
             nextState: STATES.YELLOW,
             turnYellow: function () {
                 console.log('\tTurning yellow. Must wait.');
-                return { nextAction: ACTIONS.TURN_RED, timeout: 1000 };
+                return { nextAction: ACTIONS.TURN_RED, timeout: 3000 };
             }
         },
         BLINKING_YELLOW: {
             nextState: STATES.GREEN,
             turnGreen: function () {
                 console.log('\tTurning green light...');
-                return { nextAction: ACTIONS.TURN_BLINKING_GREEN, timeout: 2000 };
+                return { nextAction: ACTIONS.TURN_BLINKING_GREEN, timeout: 3000 };
             }
         }
     }

@@ -1,5 +1,5 @@
 import './styles/TrafficLight.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ACTIONS, STATES } from './machine/constants';
 import useTrafficLightMachine from './machine/use-state-machine';
 import trafficLightDefintion from './machine/machine-def';
@@ -7,10 +7,20 @@ import trafficLightDefintion from './machine/machine-def';
 const TrafficLight = () => {
   const title = "State machine - Traffic light example";
   const [info, sendEvent] = useTrafficLightMachine(trafficLightDefintion);
-
   const [message, setMessage] = useState("Here will be displayed message from machine");
 
-  
+  useEffect(() => {
+    console.log('info changed');
+    console.log(info);
+
+    if (info.timeout < 10000) {
+      setTimeout(() => {
+        sendEvent(info.nextAction);
+      }, info.timeout)
+    }
+
+  }, [info, sendEvent]);
+
   const yellowLightClass = () => {
     if (info.state === STATES.YELLOW || info.state === STATES.RED_AND_YELLOW) {
       return "circle yellow";
@@ -32,11 +42,13 @@ const TrafficLight = () => {
   }
 
   const turnOn = () => {
-    sendEvent(ACTIONS.TURN_GREEN)
+    let ret = sendEvent(ACTIONS.TURN_GREEN);
+    console.log(info);
   }
 
   const turnOff = () => {
-    console.log('off');
+    let ret = sendEvent(ACTIONS.TURN_BLINKING_YELLOW);
+    console.log(ret);
   }
 
   const buttonConfig = {
@@ -45,7 +57,7 @@ const TrafficLight = () => {
     style: info.state === STATES.BLINKING_YELLOW ? "button turn-on" : "button -turn-off"
   }
 
-  return ( 
+  return (
     <div className="container">
       <div className="title">
         <p className="title-message">{title}</p>
@@ -58,7 +70,7 @@ const TrafficLight = () => {
         <div className={yellowLightClass()}></div>
         <div className={greenLightClass()}></div>
       </div>
-      
+
     </div>
   );
 }
