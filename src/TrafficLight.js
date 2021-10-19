@@ -1,5 +1,5 @@
 import './styles/TrafficLight.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { ACTIONS, STATES } from './machine/constants';
 import useTrafficLightMachine from './machine/use-state-machine';
 import trafficLightDefintion from './machine/machine-def';
@@ -7,19 +7,30 @@ import trafficLightDefintion from './machine/machine-def';
 const TrafficLight = () => {
   const title = "State machine - Traffic light example";
   const [info, sendEvent] = useTrafficLightMachine(trafficLightDefintion);
-  const [message, setMessage] = useState("Here will be displayed message from machine");
+  const currentExecutonRef = useRef(0);
 
   useEffect(() => {
-    console.log('info changed');
-    console.log(info);
-
     if (info.timeout < 10000) {
-      setTimeout(() => {
+      currentExecutonRef.current = setTimeout(() => {
         sendEvent(info.nextAction);
-      }, info.timeout)
+      }, info.timeout);
     }
-
   }, [info, sendEvent]);
+
+  const turnOn = () => {
+    sendEvent(ACTIONS.TURN_GREEN);
+  }
+
+  const turnOff = () => {
+    sendEvent(ACTIONS.TURN_OFF);
+    clearTimeout(currentExecutonRef.current);
+  }
+
+  const buttonConfig = {
+    handler: info.state === STATES.BLINKING_YELLOW ? turnOn : turnOff,
+    text: info.state === STATES.BLINKING_YELLOW ? "Start" : "Stop",
+    style: info.state === STATES.BLINKING_YELLOW ? "button turn-on" : "button -turn-off"
+  }
 
   const yellowLightClass = () => {
     if (info.state === STATES.YELLOW || info.state === STATES.RED_AND_YELLOW) {
@@ -41,28 +52,12 @@ const TrafficLight = () => {
     }
   }
 
-  const turnOn = () => {
-    let ret = sendEvent(ACTIONS.TURN_GREEN);
-    console.log(info);
-  }
-
-  const turnOff = () => {
-    let ret = sendEvent(ACTIONS.TURN_BLINKING_YELLOW);
-    console.log(ret);
-  }
-
-  const buttonConfig = {
-    handler: info.state === STATES.BLINKING_YELLOW ? turnOn : turnOff,
-    text: info.state === STATES.BLINKING_YELLOW ? "Start" : "Stop",
-    style: info.state === STATES.BLINKING_YELLOW ? "button turn-on" : "button -turn-off"
-  }
-
   return (
     <div className="container">
       <div className="title">
         <p className="title-message">{title}</p>
         <p className="title-message">Crrent state - {info.state}</p>
-        <p className="title-message">{message}</p>
+        <p className="title-message">{info.message}</p>
         <button className={buttonConfig.style} onClick={buttonConfig.handler}>{buttonConfig.text}</button>
       </div>
       <div className="traffic-light">

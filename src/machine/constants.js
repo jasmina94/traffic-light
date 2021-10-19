@@ -12,7 +12,8 @@ const ACTIONS = {
     TURN_YELLOW: 'turnYellow',
     TURN_GREEN: 'turnGreen',
     TURN_BLINKING_GREEN: 'turnBlinkingGreen',
-    TURN_BLINKING_YELLOW: 'turnBlinkingYellow'
+    TURN_BLINKING_YELLOW: 'turnBlinkingYellow',
+    TURN_OFF: 'turnOff'
 }
 
 module.exports = {

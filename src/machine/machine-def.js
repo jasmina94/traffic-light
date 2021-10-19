@@ -6,43 +6,38 @@ const trafficLightDefintion = {
         RED: {
             nextState: STATES.RED_AND_YELLOW,
             turnYellow: function () {
-                console.log('\tEnough of waiting. Turning yellow and leaving red...');
-                return { nextAction: ACTIONS.TURN_GREEN, timeout: 2000 };
+                return { nextAction: ACTIONS.TURN_GREEN, timeout: 3000, message: 'Enough of waiting. Turning yellow and leaving red...' };
             }
         },
         RED_AND_YELLOW: {
             nextState: STATES.GREEN,
             turnGreen: function () {
-                console.log('\tGet ready. Turning green...');
-                return { nextAction: ACTIONS.TURN_BLINKING_GREEN, timeout: 3000 };
+                return { nextAction: ACTIONS.TURN_BLINKING_GREEN, timeout: 4000, message: 'Get ready. Turning green...' };
             }
         },
         YELLOW: {
             nextState: STATES.RED,
             turnRed: function () {
-                console.log('\tOuuups. Last chance! Turning red light');
-                return { nextAction: ACTIONS.TURN_YELLOW, timeout: 2000 };
+                return { nextAction: ACTIONS.TURN_YELLOW, timeout: 3000, message: 'Ouuups. Last chance! Turning red light' };
             }
         },
         GREEN: {
             nextState: STATES.BLINKING_GREEN,
             turnBlinkingGreen: function () {
-                console.log('\tTurning blinking green...');
-                return { nextAction: ACTIONS.TURN_YELLOW, timeout: 2000 };
+                return { nextAction: ACTIONS.TURN_YELLOW, timeout: 3000, message: 'Turning blinking green...' };
             }
         },
         BLINKING_GREEN: {
             nextState: STATES.YELLOW,
             turnYellow: function () {
-                console.log('\tTurning yellow. Must wait.');
-                return { nextAction: ACTIONS.TURN_RED, timeout: 3000 };
+                return { nextAction: ACTIONS.TURN_RED, timeout: 4000, message: 'Turning yellow. Must wait.' };
             }
         },
         BLINKING_YELLOW: {
             nextState: STATES.GREEN,
+
             turnGreen: function () {
-                console.log('\tTurning green light...');
-                return { nextAction: ACTIONS.TURN_BLINKING_GREEN, timeout: 3000 };
+                return { nextAction: ACTIONS.TURN_BLINKING_GREEN, timeout: 4000, message: 'Turning green light...' };
             }
         }
     }
