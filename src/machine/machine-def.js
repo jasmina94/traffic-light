@@ -35,7 +35,6 @@ const trafficLightDefintion = {
         },
         BLINKING_YELLOW: {
             nextState: STATES.GREEN,
-
             turnGreen: function () {
                 return { nextAction: ACTIONS.TURN_BLINKING_GREEN, timeout: 4000, message: 'Turning green light...' };
             }
